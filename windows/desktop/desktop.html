@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js" integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/css/bootstrap.min.css" integrity="sha512-SbiR/eusphKoMVVXysTKG/7VseWii+Y3FdHrt0EpKgpToZeemhqHeZeLWLhJutz/2ut2Vw1uQEj2MbRF+TVBUA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,300" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.0/css/bootstrap.min.css" integrity="sha512-XWTTruHZEYJsxV3W/lSXG1n3Q39YIWOstqvmFsdNEEQfHoZ6vm6E9GK2OrF6DSJSpIbRbi+Nn0WDPID9O7xB2Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/ingame.css" />
+    <link rel="stylesheet" href="../../css/general.css" />
+    <link rel="stylesheet" href="../../css/header.css" />
+    <link rel="stylesheet" href="../../css/desktop.css" />
+    <link rel="stylesheet" href="../../css/modal.css" />
+    <title>Stream Chat Overlay - Desktop window</title>
+  </head>
+  <body class="desktop">
+    <!-- -------------------------------- Header ------------------------------- -->
+
+    <header class="app-header">
+      <img src="../../img/header_icon.svg" />
+      <h1>Stream Chat Overlay / desktop window</h1>
+      <div class="window-controls-group">
+        <button id="minimizeButton" class="window-control window-control-minimize" />
+        <button id="maximizeButton" class="window-control window-control-maximize" />
+        <button id="closeButton" class="window-control window-control-close" />
+      </div>
+    </header>
+
+    <!-- --------------------------------- Main -------------------------------- -->
+    <main>
+      <div class="desktopTop">
+        <h1>Stream Chat Overlay</h1>
+        <p>
+          Welcome to Stream Chate Overlay. This app allows you to<br/>
+          view Stream Chat Overlays from various services in game!
+        </p>
+        <div id="version"></div>
+      </div>
+      <div class="desktopBottom">
+        <!-- Launch a game! -->
+        <div id="left">
+          <h1>
+            Launch a game, and the In-Game window will pop-up automatically!
+          </h1>
+        </div>
+        <!-- Launch a game! -->
+        <div id="middle">
+          How does it work?
+          <br /><br />
+          1. When you load into a game for the first time the app will appear
+          with the <button type="button" class="btn btn-sm btn-primary"><i class="material-icons">settings</i></button> button already expanded. Just past your overlay url into the
+          box and click Save
+          <br /><br />
+          2. You can use the <button type="button" class="btn btn-sm btn-warning"><i class="material-icons">maximize</i></button> button
+          To show/hide the size and opacity sliders.
+          <br /><br />
+          3. You can use ALT+CTRL+T (by default) to show/hide the Header
+        </div>
+        <!-- picture -->
+        <div id="right">
+          <div style="text-align: center">
+            <div style="display: inline-block">
+              <img src="../../img/cool_wolf.png" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script type="module" src="./desktop.js"></script>
+  </body>
+</html>
