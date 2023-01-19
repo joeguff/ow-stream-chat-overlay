@@ -1,5 +1,5 @@
 # ow-stream-chat-overlay
-Welcome to Stream Chate Overlay. This app allows you to
+Welcome to Stream Chat Overlay. This app allows you to
 view Stream Chat Overlays from various services in game!
 
 Launch a game, and the In-Game window will pop-up automatically!
