@@ -8,7 +8,7 @@ How does it work?
 
 1. When you load into a game for the first time the app will appear
 with the settings button (Blue button in the upper-left) already expanded.
-Just past your overlay url into the box and click Save
+Just paste your overlay url into the box and click Save
 
 2. You can use the maximize button (Yellow button in the upper-left)
 To show/hide the size and opacity sliders
