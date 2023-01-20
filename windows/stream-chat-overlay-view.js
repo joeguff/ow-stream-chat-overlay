@@ -62,12 +62,14 @@ export class StreamChatOverlayView {
         
       );
       // Allow maximizing a window with doubleclick
+      /*
       if (this._header) {
         this._header.addEventListener(
           'dblclick',
           StreamChatOverlayView._toggleWindowMaximize
         );
       }
+      */
     }
 
     // Prevent window dragging when you click on buttons

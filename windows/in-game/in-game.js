@@ -15,6 +15,7 @@ const isValidUrl = urlString=> {
 }
 
 let lh = null, wh = null;
+window.gameInfo = null;
 
 if (!inGameController._lsWindowOpacity) {
     localStorage.setItem('ingameWindowOpacity', 75);
@@ -78,7 +79,7 @@ if (inGameController._embedURL && !$('#chat-embed').length) {
 
 
 overwolf.games.getRunningGameInfo2(function(g){
-    $(".fill-height").height('100%');
+    gameInfo = g;
     overwolf.windows.getCurrentWindow(function(w) {
         var maxHeight, maxWidth, ch = w.window.height, cw = w.window.width;
         if (w.window.top < 0) {
@@ -107,6 +108,7 @@ overwolf.games.getRunningGameInfo2(function(g){
                 <label for="widthSlider">Width</label>
                 <input type="range" class="form-range" min="250" max="${maxWidth}" value="${cw}" step="10" id="widthSlider">
             </div>
+
         </div>
         <div class="row">
             <div class="col">
@@ -139,6 +141,9 @@ overwolf.games.getRunningGameInfo2(function(g){
             document.getElementById("chat-container").style.opacity = $(this).val()/100;
         });
 
+        $("#resyncWidthButton").click(function() {
+            _onResynWidthClicked();
+        });
         overwolf.games.onGameInfoUpdated.addListener(_onGameInfoUpdated);
 
     });
@@ -198,6 +203,7 @@ overwolf.windows.onMessageReceived.addListener((message) =>  {
 });
 
 function _onGameInfoUpdated(g) {
+    gameInfo = g;
     if (g.reason[0] == 'gameResolutionChanged' && g.gameInfo.isInFocus) {
         overwolf.windows.obtainDeclaredWindow('in_game', function(w) {
             let maxWidth = g.gameInfo.logicalWidth-w.window.left-5;
@@ -214,53 +220,88 @@ function _onGameInfoUpdated(g) {
 }
 
 function _sizeSliderOnChange(e) {
-    overwolf.games.getRunningGameInfo2(function(g){
-        overwolf.windows.obtainDeclaredWindow('in_game', function(w) {
-            var nh = $("#heightSlider").val(),
-                nw = $("#widthSlider").val(),
-                heightSliderMax = $("#heightSlider").attr('max'),
-                widthSliderMax = $("#widthSlider").attr('max'),
-                maxHeight,
-                maxWidth,
-                doChange = false;
-            if (w.window.top < 0) {
-                maxHeight = g.gameInfo.logicalHeight+w.window.top-5;
-            } else {
-                maxHeight = g.gameInfo.logicalHeight-w.window.top-5;
-            }
-            if (w.window.left < 0) {
-                maxWidth = g.gameInfo.logicalWidth+w.window.left-5;
-            } else {
-                maxWidth = g.gameInfo.logicalWidth-w.window.left-5;
-            }
-            if (maxHeight != heightSliderMax) {
-                $("#heightSlider").attr('max', maxHeight);
-                doChange = true;
-            }
+    /*
+    if (!gameInfo) {
+        alert(1);
+        return null;
+    }
+    var g = gameInfo;
+    overwolf.windows.obtainDeclaredWindow('in_game', function(w) {
+        var nh = $("#heightSlider").val(),
+            nw = $("#widthSlider").val(),
+            heightSliderMax = parseInt($("#heightSlider").attr('max'), 10),
+            widthSliderMax = parseInt($("#widthSlider").attr('max'), 10),
+            maxHeight,
+            maxWidth,
+            doChange = false;
+        if (w.window.top < 0) {
+            maxHeight = g.gameInfo.logicalHeight+w.window.top-5;
+        } else {
+            maxHeight = g.gameInfo.logicalHeight-w.window.top-5;
+        }
+        if (w.window.left < 0) {
+            maxWidth = g.gameInfo.logicalWidth+w.window.left-5;
+        } else {
+            maxWidth = g.gameInfo.logicalWidth-w.window.left-5;
+        }
+        if (maxHeight != heightSliderMax) {
+            $("#heightSlider").attr('max', maxHeight);
+        }
 
-            
-            if (maxWidth != widthSliderMax) {
-                $("#widthSlider").attr('max', maxWidth);
-                doChange = true;
-            }
+        
+        if (maxWidth != widthSliderMax) {
+            $("#widthSlider").attr('max', maxWidth);
+            alert(''+maxWidth+'MW_'+widthSliderMax+"_WSM");
+        }
+        
+        if (nh > maxHeight) {
+            //alert('nh: '+nh);
+            nh = maxHeight;
+            $("#heightSlider").val(maxHeight)
+        }
+        if (nw > maxWidth) {
+            //alert('nw: '+nw);
+            nw = maxWidth;
+            $("#widthSlider").val(maxWidth);
+        }
+        _sliderChangeSize(w.window.id,nw,nh);
+    });
+    */
+    if (!gameInfo) {
+        alert(1);
+        return null;
+    }
+    var g = gameInfo;
+    overwolf.windows.obtainDeclaredWindow('in_game', function(w) {
+        var nh = $("#heightSlider").val(),
+            nw = $("#widthSlider").val(),
+            maxHeight,
+            maxWidth;
+        if (w.window.top < 0) {
+            maxHeight = g.gameInfo.logicalHeight+w.window.top-5;
+        } else {
+            maxHeight = g.gameInfo.logicalHeight-w.window.top-5;
+        }
+        if (w.window.left < 0) {
+            maxWidth = g.gameInfo.logicalWidth+w.window.left-5;
+        } else {
+            maxWidth = g.gameInfo.logicalWidth-w.window.left-5;
+        }
+        $("#heightSlider").attr('max', maxHeight);
+        $("#widthSlider").attr('max', maxWidth);
 
-            if (doChange = true) {
-                heightSliderMax = $("#heightSlider").attr('max');
-                widthSliderMax = $("#widthSlider").attr('max');
-            }
-            
-            if (nh > maxHeight) {
-                //alert('nh: '+nh);
-                nh = maxHeight;
-                $("#heightSlider").val(nh)
-            }
-            if (nw > maxWidth) {
-                //alert('nw: '+nw);
-                nw = maxWidth;
-                $("#widthSlider").val(nw);
-            }
-            _sliderChangeSize(w.window.id,nw,nh);
-        });
+        
+        if (nh > maxHeight) {
+            //alert('nh: '+nh);
+            nh = maxHeight;
+            $("#heightSlider").val(maxHeight)
+        }
+        if (nw > maxWidth) {
+            //alert('nw: '+nw);
+            nw = maxWidth;
+            $("#widthSlider").val(maxWidth);
+        }
+        _sliderChangeSize(w.window.id,nw,nh);
     });
 
 }
@@ -272,7 +313,50 @@ function _sliderChangeSize(window,nw,nh) {
         "height":nh,
         "auto_dpi_resize":true //relevant only for native windows
     }
-    overwolf.windows.changeSize(sizeSettings ,function() {
-        $("#chat-panel").height('100%');
+    overwolf.windows.changeSize(sizeSettings ,function(e) {
+        if (e.success) {
+            $("#chat-panel").height('100%');
+        } else {
+            alert(JSON.stringify(e));
+        }
+    });
+}
+
+function _onResynWidthClicked() {
+    if (!gameInfo) {
+        alert(1);
+        return null;
+    }
+    var g = gameInfo;
+    overwolf.windows.obtainDeclaredWindow('in_game', function(w) {
+        var nh = $("#heightSlider").val(),
+            nw = $("#widthSlider").val(),
+            maxHeight,
+            maxWidth;
+        if (w.window.top < 0) {
+            maxHeight = g.gameInfo.logicalHeight+w.window.top-5;
+        } else {
+            maxHeight = g.gameInfo.logicalHeight-w.window.top-5;
+        }
+        if (w.window.left < 0) {
+            maxWidth = g.gameInfo.logicalWidth+w.window.left-5;
+        } else {
+            maxWidth = g.gameInfo.logicalWidth-w.window.left-5;
+        }
+        $("#heightSlider").attr('max', maxHeight);
+        $("#widthSlider").attr('max', maxWidth);
+
+        
+        if (nh > maxHeight) {
+            //alert('nh: '+nh);
+            nh = maxHeight;
+            $("#heightSlider").val(maxHeight)
+        }
+        if (nw > maxWidth) {
+            //alert('nw: '+nw);
+            nw = maxWidth;
+            $("#widthSlider").val(maxWidth);
+        }
+        _sliderChangeSize(w.window.id,nw,nh);
     });
 }
